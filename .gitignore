@@ -1,0 +1,6 @@
+node_modules
+coverage
+../senler-integration-bot1/.idea
+npm-debug.log
+package-lock.json
+.nyc_output
