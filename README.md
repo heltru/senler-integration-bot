@@ -62,7 +62,7 @@ integrationConnect.route('setData', (message) => {
         ],
         "command_title": "Example One"
     },
-    "type": "setData",
+    "type": "getData",
     "success": true    
 }
 ```
