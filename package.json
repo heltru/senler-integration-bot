@@ -4,6 +4,7 @@
   "version": "1.0.4",
   "private": false,
   "dependencies": {},
+  "type":"module",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
