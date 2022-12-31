@@ -1,15 +1,17 @@
 {
   "name": "senler-integration-bot",
   "description": "Senler Bot App template for integration in bot step. By windows.post.message.",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "private": false,
-  "dependencies": {},
-  "type":"module",
+  "dependencies": {
+    "@babel/runtime": "^7.20.7"
+  },
+  "type": "module",
+  "main": "dist/bundle.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "node_modules/.bin/webpack --config webpack.config.js --mode=production",
+    "watch": "node_modules/.bin/webpack --config webpack.config.js --mode=development -w",
+    "prebuild:dev": "rimraf dist"
   },
   "browserslist": {
     "production": [
@@ -22,5 +24,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.7",
+    "@babel/plugin-transform-runtime": "^7.19.6",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.0",
+    "rimraf": "^3.0.2",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
   }
 }

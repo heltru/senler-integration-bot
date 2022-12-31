@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example Senler Bot Integration</title>
+</head>
+<body>
+<header>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script  src="https://unpkg.com/senler-integration-bot/dist/bundle.js"></script>
+</header>
+
+
+
+
+<p>Выберите форму склонения:</p>
+<div>
+    <input type="radio" id="typeChoice1"
+           name="radio_type" value="1">
+    <label for="typeChoice1">Уменьшительно - ласкательной форма</label><br>
+    <input type="radio" id="typeChoice2"
+           name="radio_type" value="2">
+    <label for="typeChoice2">Эпичная форма</label>
+</div>
+</body>
+
+
+
+<script>
+    let integrationConnect = new IntegrationConnect();
+
+    integrationConnect.route('setData', (message) => {
+
+        let settings = message.request.payload;
+        if ('public' in settings) {
+            let data = JSON.parse(settings.public);
+            $("input[name=radio_type][value='" + data.type + "']").prop('checked', true);
+        }
+
+
+        message.responce.success = true;
+        message.send();//Отправим ответ timeout 50 сек
+    });
+
+    integrationConnect.route('getData', (message) => {
+        message['responce'] = {
+            payload: {
+                public: {},
+                command_title: '',
+            },
+            success: true
+        };
+
+        let select_type = $('input[name="radio_type"]:checked').val();
+        if (!select_type) {
+            alert('Выберите тип');
+            message['success'] = false;
+            message.send();//Отправим ответ timeout 50 сек
+        } else {
+
+            let public = {type: select_type};
+            let command_title = $(`[for="typeChoice${select_type}"]`).text();
+            message.responce.payload['public'] = public;
+            message.responce.payload['command_title'] = command_title;
+            message.send();//Отправим ответ timeout 50 сек
+        }
+
+    });
+
+
+</script>
+
+</html>
