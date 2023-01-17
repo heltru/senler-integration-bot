@@ -1,7 +1,7 @@
 {
   "name": "senler-integration-bot",
-  "description": "Senler Bot App template for integration in bot step. By windows.post.message.",
-  "version": "1.0.6",
+  "description": "SenlerIntegrationBot",
+  "version": "1.0.7",
   "private": false,
   "dependencies": {
     "@babel/runtime": "^7.20.7"

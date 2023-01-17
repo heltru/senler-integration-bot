@@ -10,11 +10,14 @@ npm i senler-integration-bot
 
 Документация [Интеграций Senler](https://app.gitbook.com/o/-L_IF5TbiMa8dxgx_94P/s/-L_IF5Te3IJsAOAjS0Js/~/changes/5KXCjOJaCW3x6DidncV4/chat-boty-integracii).
 
+ 
 ## Чтение настроек
 При открытии модального окна и загрузки интеграции через iframe. Событие onload. Senler отправляет запрос `setData` c настройками из шага.
 
 Интеграция обрабатывает запрос следующим образом:
 ```js
+import IntegrationConnect from "senler-integration-bot/src/index.js";
+
 integrationConnect.route('setData', (message) => {
         let settings = message.request.payload;
         if ('private' in settings) {
@@ -69,3 +72,9 @@ integrationConnect.route('setData', (message) => {
 - `public` - публичные настройки
 - `private` - приватные настройки, очищаются при копировании бота
 - `command_title` - заголовок в редакторе бота
+
+Для браузера [`dist/bundle.js`](https://unpkg.com/senler-integration-bot/dist/bundle.js)
+
+```html
+<script src="https://unpkg.com/senler-integration-bot/dist/bundle.js"></script>
+```
