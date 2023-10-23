@@ -1,7 +1,7 @@
 {
   "name": "senler-integration-bot",
   "description": "SenlerIntegrationBot",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "private": false,
   "dependencies": {
     "@babel/runtime": "^7.20.7"
