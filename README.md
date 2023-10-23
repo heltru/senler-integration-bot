@@ -26,7 +26,7 @@ integrationConnect.route('setData', (message) => {
         if ('public' in settings) {
             setPublicSettings(JSON.parse(settings.public))
         }
-        message.responce.success = true;
+        message.response.success = true;
         message.send();//Отправим ответ timeout 50 сек
 });
 ```
@@ -37,15 +37,16 @@ integrationConnect.route('setData', (message) => {
 Интеграция обрабатывает запрос следующим образом:
 ```js
  integrationConnect.route('getData', (message) => {
-    message['responce'] = {
+    message['response'] = {
         payload: {},
         success: true
     };
 
-    message.responce.payload['public'] =  JSON.parse(localStorage.getItem('public_settings'));
-    message.responce.payload['private'] = JSON.parse(localStorage.getItem('private_settings'));
+    message.response.payload['public'] =  JSON.parse(localStorage.getItem('public_settings'));
+    message.response.payload['private'] = JSON.parse(localStorage.getItem('private_settings'));
 
-    message.responce.payload['command_title'] = 'Бот шлет сообщение с подписчиком';
+    message.response.payload['command'] = 'Бот шлет сообщение с подписчиком';
+    message.response.payload['description'] = 'Бот шлет сообщение с подписчиком';
 
     message.send();//Отправим ответ timeout 50 сек
 });

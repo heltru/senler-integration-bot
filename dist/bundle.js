@@ -42,9 +42,9 @@ var IntegrationConnect = /*#__PURE__*/function () {
       // }
       console.log('integration .onmessage ', 'e.origin=', e.origin, e.data);
       var message = e.data;
-      if (message.hasOwnProperty('request') && message.hasOwnProperty('responce')) {
+      if (message.hasOwnProperty('request') && message.hasOwnProperty('response')) {
         //full
-        _this.handleResponce(message);
+        _this.handleResponse(message);
       } else {
         if (message.hasOwnProperty('request')) {
           _this.handleRequest(message);
@@ -62,14 +62,14 @@ var IntegrationConnect = /*#__PURE__*/function () {
         if (_this.requests.hasOwnProperty(id)) {
           var request = _this.requests[id];
           if (time > request.time + _this.timeout_sec * 1000) {
-            request['responce'] = {
+            request['response'] = {
               success: false,
               payload: {},
               message: "timeout",
               code: 1000
             };
             console.log('timeout request=', request);
-            _this.handleResponce(request);
+            _this.handleResponse(request);
           }
         }
       }
@@ -93,12 +93,12 @@ var IntegrationConnect = /*#__PURE__*/function () {
     key: "handleRequest",
     value: function handleRequest(message) {
       console.log('integration .handleRequest', message);
-      var responce = {
+      var response = {
         success: true,
         payload: {}
       };
       message.send = this.send;
-      message.responce = responce;
+      message.response = response;
       try {
         var _iterator = _createForOfIteratorHelper(this.subscribers),
           _step;
@@ -115,23 +115,23 @@ var IntegrationConnect = /*#__PURE__*/function () {
           _iterator.f();
         }
       } catch (e) {
-        responce.success = false;
-        responce.error = e.message;
+        response.success = false;
+        response.error = e.message;
       }
-      message.responce = responce;
+      message.response = response;
 
       // window.parent.postMessage(JSON.parse(JSON.stringify(message)), '*');
     }
   }, {
-    key: "handleResponce",
-    value: function handleResponce(message) {
-      console.log('integration .handleResponce message=', message);
+    key: "handleResponse",
+    value: function handleResponse(message) {
+      console.log('integration .handleResponse message=', message);
       if (message.id && this.requests.hasOwnProperty(message.id)) {
         var request = this.requests[message.id];
-        request.callback(message.responce);
+        request.callback(message.response);
         delete this.requests[message.id];
       } else {
-        console.log('.handleResponce');
+        console.log('.handleResponse');
       }
     }
   }, {

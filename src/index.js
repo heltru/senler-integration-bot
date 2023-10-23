@@ -16,8 +16,8 @@ class IntegrationConnect {
 
             let message = e.data;
 
-            if (message.hasOwnProperty('request') && message.hasOwnProperty('responce')) {//full
-                this.handleResponce(message);
+            if (message.hasOwnProperty('request') && message.hasOwnProperty('response')) {//full
+                this.handleResponse(message);
             } else {
                 if (message.hasOwnProperty('request')) {
                     this.handleRequest(message);
@@ -38,9 +38,9 @@ class IntegrationConnect {
                 if (this.requests.hasOwnProperty(id)) {
                     let request = this.requests[id];
                     if (time > (request.time + (this.timeout_sec * 1000))) {
-                        request['responce'] = {success: false, payload: {}, message: "timeout", code: 1000};
+                        request['response'] = {success: false, payload: {}, message: "timeout", code: 1000};
                         console.log('timeout request=', request);
-                        this.handleResponce(request);
+                        this.handleResponse(request);
                     }
                 }
             }
@@ -60,10 +60,10 @@ class IntegrationConnect {
     handleRequest(message) {
 
         console.log('integration .handleRequest', message);
-        let responce = {success: true, payload: {}};
+        let response = {success: true, payload: {}};
 
         message.send = this.send;
-        message.responce = responce;
+        message.response = response;
 
 
         try {
@@ -74,23 +74,23 @@ class IntegrationConnect {
                 }
             }
         } catch (e) {
-            responce.success = false;
-            responce.error = e.message;
+            response.success = false;
+            response.error = e.message;
         }
-        message.responce = responce;
+        message.response = response;
 
         // window.parent.postMessage(JSON.parse(JSON.stringify(message)), '*');
     }
 
-    handleResponce(message) {
-        console.log('integration .handleResponce message=', message);
+    handleResponse(message) {
+        console.log('integration .handleResponse message=', message);
         if (message.id && this.requests.hasOwnProperty(message.id)) {
 
             let request = this.requests[message.id];
-            request.callback(message.responce);
+            request.callback(message.response);
             delete this.requests[message.id];
         } else {
-            console.log('.handleResponce');
+            console.log('.handleResponse');
         }
     }
 

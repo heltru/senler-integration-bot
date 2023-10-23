@@ -9,8 +9,8 @@
   "type": "module",
   "main": "dist/bundle.js",
   "scripts": {
-    "build": "node_modules/.bin/webpack --config webpack.config.js --mode=production",
-    "watch": "node_modules/.bin/webpack --config webpack.config.js --mode=development -w",
+    "build": "webpack --config webpack.config.js --mode=production",
+    "watch": "webpack --config webpack.config.js --mode=development -w",
     "prebuild:dev": "rimraf dist"
   },
   "browserslist": {
